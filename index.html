@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutrivie</title>
+    <title>Nutrivie - Smart Food Categorization</title>
     <style>
         :root {
             --primary-color: #ff7b25;
@@ -12,10 +12,11 @@
             --dark-color: #333;
             --success-color: #28a745;
             --success-hover: #218838;
+            --health-color: #8bc34a;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--light-color);
@@ -29,7 +30,7 @@
         .container {
             max-width: 600px;
             margin: 40px auto;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -37,22 +38,33 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        h2 {
-            color: var(--primary-color);
+        .logo {
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+            display: inline-block;
             position: relative;
         }
         
-        h2::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: var(--secondary-color);
-            margin: 10px auto;
-            border-radius: 2px;
+        .logo h1::after {
+            content: '🍏';
+            position: absolute;
+            right: -35px;
+            top: -5px;
+            font-size: 30px;
+            transform: rotate(15deg);
+        }
+        
+        .logo p {
+            color: var(--dark-color);
+            margin-top: 5px;
+            font-style: italic;
         }
         
         label {
@@ -70,7 +82,7 @@
             border-radius: 8px;
             font-size: 16px;
             transition: all 0.3s;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.9);
         }
         
         input:focus, select:focus {
@@ -80,30 +92,34 @@
         }
         
         button {
-            background-color: var(--success-color);
+            background-color: var(--health-color);
             color: white;
-            padding: 12px 20px;
+            padding: 14px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 15px;
             transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         button:hover {
-            background-color: var(--success-hover);
+            background-color: #7cb342;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         #result {
             margin-top: 25px;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             font-size: 18px;
             text-align: center;
@@ -111,8 +127,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-left: 5px solid var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.8);
+            border-left: 5px solid var(--health-color);
             transition: all 0.3s;
         }
         
@@ -122,28 +138,36 @@
         }
         
         .category-breakfast {
-            background-color: rgba(255, 236, 179, 0.7);
+            background-color: rgba(255, 236, 179, 0.8);
             border-left-color: #ffc107;
         }
         
         .category-lunch {
-            background-color: rgba(200, 230, 201, 0.7);
+            background-color: rgba(200, 230, 201, 0.8);
             border-left-color: #4caf50;
         }
         
         .category-dinner {
-            background-color: rgba(179, 229, 252, 0.7);
+            background-color: rgba(179, 229, 252, 0.8);
             border-left-color: #03a9f4;
         }
         
         .category-snack {
-            background-color: rgba(255, 224, 178, 0.7);
+            background-color: rgba(255, 224, 178, 0.8);
             border-left-color: #ff9800;
         }
         
         .category-health {
-            background-color: rgba(220, 237, 200, 0.7);
-            border-left-color: #8bc34a;
+            background-color: rgba(220, 237, 200, 0.9);
+            border-left-color: var(--health-color);
+        }
+        
+        .nutrition-facts {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            font-style: italic;
         }
         
         @media (max-width: 768px) {
@@ -151,17 +175,26 @@
                 margin: 20px;
                 padding: 20px;
             }
+            
+            .logo h1 {
+                font-size: 28px;
+            }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h2>🍽️ Food Categorization</h2>
+        <div class="logo">
+            <h1>Nutrivie</h1>
+            <p>Smart Food Analysis & Categorization</p>
+        </div>
+        
         <form id="foodForm">
             <label for="foodName">Food Name:</label>
             <input type="text" id="foodName" placeholder="e.g., Nasi Padang, Salad, Pancake">
 
-            <label for="time">Time of Consumption:</label>
+            <label for="time">⏰ Time of Consumption:</label>
             <select id="time">
                 <option value="">Select Time</option>
                 <option value="morning">🌅 Morning</option>
@@ -169,44 +202,47 @@
                 <option value="night">🌙 Night</option>
             </select>
 
-            <label for="weight">Food Weight:</label>
+            <label for="weight">⚖️ Food Weight:</label>
             <select id="weight">
                 <option value="">Select Weight</option>
                 <option value="light">🍃 Light</option>
                 <option value="heavy">🏋️ Heavy</option>
             </select>
 
-            <label for="calorie">Calorie Content:</label>
+            <label for="calorie">🔥 Calorie Content:</label>
             <select id="calorie">
-                <option value="">Select Calorie</option>
+                <option value="">Select Calorie Level</option>
                 <option value="high">⚡ High</option>
                 <option value="low">🍃 Low</option>
             </select>
 
-            <label for="prepTime">Preparation Time:</label>
+            <label for="prepTime">⏱️ Preparation Time:</label>
             <select id="prepTime">
                 <option value="">Select Preparation Time</option>
                 <option value="quick">⚡ Quick</option>
                 <option value="normal">⏳ Normal</option>
             </select>
 
-            <label for="nutrition">Nutrition Level:</label>
+            <label for="nutrition">💊 Nutrition Level:</label>
             <select id="nutrition">
-                <option value="">Select Nutrition</option>
+                <option value="">Select Nutrition Level</option>
                 <option value="nutritious">💪 Nutritious</option>
                 <option value="normal">🍽️ Normal</option>
             </select>
 
-            <label for="balance">Balanced Nutrition:</label>
+            <label for="balance">⚖️ Balanced Nutrition:</label>
             <select id="balance">
-                <option value="">Select Balance</option>
+                <option value="">Select Balance Level</option>
                 <option value="balanced">⚖️ Balanced</option>
                 <option value="normal">🍽️ Normal</option>
             </select>
 
-            <button type="button" onclick="categorizeFood()">Categorize Food</button>
+            <button type="button" onclick="categorizeFood()">
+                <span>Analyze Food</span> 🔍
+            </button>
         </form>
-        <div id="result"></div>
+        <div id="result">Your food analysis will appear here</div>
+        <div class="nutrition-facts">Nutrivie helps you understand your eating habits for better nutrition</div>
     </div>
 
     <script>
@@ -236,7 +272,7 @@
                 dinner: false,
                 snack: false,
                 healthFood: false,
-                categoryAssigned: false // Flag to stop after specific category is set
+                categoryAssigned: false
             };
 
             // Specific food lists
@@ -251,99 +287,82 @@
             while (changes) {
                 changes = false;
 
-                // R3: Specific breakfast foods
                 if (breakfastFoods.includes(foodName) && !facts.breakfast && !facts.categoryAssigned) {
                     facts.breakfast = true;
                     facts.categoryAssigned = true;
                     changes = true;
                 }
 
-                // R6: Specific lunch foods
                 if (lunchFoods.includes(foodName) && !facts.lunch && !facts.categoryAssigned) {
                     facts.lunch = true;
                     facts.categoryAssigned = true;
                     changes = true;
                 }
 
-                // R9: Specific dinner foods
                 if (dinnerFoods.includes(foodName) && !facts.dinner && !facts.categoryAssigned) {
                     facts.dinner = true;
                     facts.categoryAssigned = true;
                     changes = true;
                 }
 
-                // R12: Specific snack foods
                 if (snackFoods.includes(foodName) && !facts.snack && !facts.categoryAssigned) {
                     facts.snack = true;
                     facts.categoryAssigned = true;
                     changes = true;
                 }
 
-                // R15: Specific health foods
                 if (healthFoods.includes(foodName) && !facts.healthFood) {
                     facts.healthFood = true;
                     changes = true;
-                    // Note: Health Food can be assigned without setting categoryAssigned
                 }
 
-                // Only apply other rules if no specific category assigned
                 if (!facts.categoryAssigned) {
-                    // R1: Morning -> Breakfast
                     if (facts.morning && !facts.breakfast) {
                         facts.breakfast = true;
                         changes = true;
                     }
 
-                    // R2: Light -> Breakfast
                     if (facts.light && !facts.breakfast) {
                         facts.breakfast = true;
                         changes = true;
                     }
 
-                    // R4: Noon -> Lunch
                     if (facts.noon && !facts.lunch) {
                         facts.lunch = true;
                         changes = true;
                     }
 
-                    // R5: High Calorie -> Lunch
                     if (facts.highCalorie && !facts.lunch) {
                         facts.lunch = true;
                         changes = true;
                     }
 
-                    // R7: Night -> Dinner
                     if (facts.night && !facts.dinner) {
                         facts.dinner = true;
                         changes = true;
                     }
 
-                    // R8: Heavy -> Dinner
                     if (facts.heavy && !facts.dinner) {
                         facts.dinner = true;
                         changes = true;
                     }
 
-                    // R10: Quick Prep -> Snack
                     if (facts.quickPrep && !facts.snack) {
                         facts.snack = true;
                         changes = true;
                     }
 
-                    // R11: Light -> Snack
                     if (facts.light && !facts.snack) {
                         facts.snack = true;
                         changes = true;
                     }
                 }
 
-                // R13: Nutritious -> Health Food
                 if (facts.nutritious && !facts.healthFood) {
                     facts.healthFood = true;
                     changes = true;
                 }
 
-                // R14: Balanced -> Health Food
                 if (facts.balanced && !facts.healthFood) {
                     facts.healthFood = true;
                     changes = true;
@@ -363,14 +382,12 @@
             } else if (facts.healthFood && healthFoods.includes(foodName)) {
                 categories.push('Health Food');
             } else {
-                // Fallback: Choose one category based on highest priority if no specific food
                 if (facts.breakfast) categories.push('Breakfast');
                 else if (facts.lunch) categories.push('Lunch');
                 else if (facts.dinner) categories.push('Dinner');
                 else if (facts.snack) categories.push('Snack');
             }
 
-            // Add Health Food if applicable and not already the primary category
             if (facts.healthFood && !categories.includes('Health Food')) {
                 categories.push('Health Food');
             }
@@ -399,10 +416,10 @@
                 }
                 
                 resultDiv.className = categoryClass;
-                resultDiv.innerHTML = `<span class="food-icon">${icon}</span> Food Category: <strong>${categories.join(', ')}</strong>`;
+                resultDiv.innerHTML = `<span class="food-icon">${icon}</span> <strong>${foodName.charAt(0).toUpperCase() + foodName.slice(1)}</strong> is categorized as: <strong>${categories.join(', ')}</strong>`;
             } else {
                 resultDiv.className = '';
-                resultDiv.innerHTML = 'No category determined. Please provide more details.';
+                resultDiv.innerHTML = 'No specific category determined. Please provide more details for accurate analysis.';
             }
         }
     </script>
