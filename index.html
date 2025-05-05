@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Categorization</title>
+    <style>
+        :root {
+            --primary-color: #ff7b25;
+            --secondary-color: #ffaa5e;
+            --light-color: #fff5ee;
+            --dark-color: #333;
+            --success-color: #28a745;
+            --success-hover: #218838;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            background-image: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 123, 37, 0.2);
+        }
+        
+        button {
+            background-color: var(--success-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            background-color: var(--success-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        #result {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s;
+        }
+        
+        .food-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .category-breakfast {
+            background-color: rgba(255, 236, 179, 0.7);
+            border-left-color: #ffc107;
+        }
+        
+        .category-lunch {
+            background-color: rgba(200, 230, 201, 0.7);
+            border-left-color: #4caf50;
+        }
+        
+        .category-dinner {
+            background-color: rgba(179, 229, 252, 0.7);
+            border-left-color: #03a9f4;
+        }
+        
+        .category-snack {
+            background-color: rgba(255, 224, 178, 0.7);
+            border-left-color: #ff9800;
+        }
+        
+        .category-health {
+            background-color: rgba(220, 237, 200, 0.7);
+            border-left-color: #8bc34a;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🍽️ Food Categorization</h2>
+        <form id="foodForm">
+            <label for="foodName">Food Name:</label>
+            <input type="text" id="foodName" placeholder="e.g., Nasi Padang, Salad, Pancake">
+
+            <label for="time">Time of Consumption:</label>
+            <select id="time">
+                <option value="">Select Time</option>
+                <option value="morning">🌅 Morning</option>
+                <option value="noon">☀️ Noon</option>
+                <option value="night">🌙 Night</option>
+            </select>
+
+            <label for="weight">Food Weight:</label>
+            <select id="weight">
+                <option value="">Select Weight</option>
+                <option value="light">🍃 Light</option>
+                <option value="heavy">🏋️ Heavy</option>
+            </select>
+
+            <label for="calorie">Calorie Content:</label>
+            <select id="calorie">
+                <option value="">Select Calorie</option>
+                <option value="high">⚡ High</option>
+                <option value="low">🍃 Low</option>
+            </select>
+
+            <label for="prepTime">Preparation Time:</label>
+            <select id="prepTime">
+                <option value="">Select Preparation Time</option>
+                <option value="quick">⚡ Quick</option>
+                <option value="normal">⏳ Normal</option>
+            </select>
+
+            <label for="nutrition">Nutrition Level:</label>
+            <select id="nutrition">
+                <option value="">Select Nutrition</option>
+                <option value="nutritious">💪 Nutritious</option>
+                <option value="normal">🍽️ Normal</option>
+            </select>
+
+            <label for="balance">Balanced Nutrition:</label>
+            <select id="balance">
+                <option value="">Select Balance</option>
+                <option value="balanced">⚖️ Balanced</option>
+                <option value="normal">🍽️ Normal</option>
+            </select>
+
+            <button type="button" onclick="categorizeFood()">Categorize Food</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function categorizeFood() {
+            // Get input values
+            const foodName = document.getElementById('foodName').value.toLowerCase().trim();
+            const time = document.getElementById('time').value;
+            const weight = document.getElementById('weight').value;
+            const calorie = document.getElementById('calorie').value;
+            const prepTime = document.getElementById('prepTime').value;
+            const nutrition = document.getElementById('nutrition').value;
+            const balance = document.getElementById('balance').value;
+
+            // Facts initialization
+            let facts = {
+                morning: time === 'morning',
+                noon: time === 'noon',
+                night: time === 'night',
+                light: weight === 'light',
+                heavy: weight === 'heavy',
+                highCalorie: calorie === 'high',
+                quickPrep: prepTime === 'quick',
+                nutritious: nutrition === 'nutritious',
+                balanced: balance === 'balanced',
+                breakfast: false,
+                lunch: false,
+                dinner: false,
+                snack: false,
+                healthFood: false,
+                categoryAssigned: false // Flag to stop after specific category is set
+            };
+
+            // Specific food lists
+            const breakfastFoods = ['roti bakar', 'sereal', 'bubur ayam', 'pancake', 'smoothie buah', 'toast', 'croissant', 'omelette'];
+            const lunchFoods = ['nasi padang', 'burger', 'ayam goreng', 'mie ayam', 'bento jepang', 'sandwich', 'pizza', 'nasi campur'];
+            const dinnerFoods = ['steak', 'nasi goreng', 'pasta carbonara', 'sup ayam', 'sushi', 'roast chicken', 'lasagna', 'soto ayam'];
+            const snackFoods = ['keripik kentang', 'biskuit', 'popcorn', 'keripik tempe', 'donut', 'chocolate', 'ice cream', 'fruit salad'];
+            const healthFoods = ['salad sayur', 'granola bar', 'smoothie bowl', 'oatmeal', 'avocado toast', 'quinoa bowl', 'grilled salmon', 'steamed vegetables'];
+
+            // Forward chaining
+            let changes = true;
+            while (changes) {
+                changes = false;
+
+                // R3: Specific breakfast foods
+                if (breakfastFoods.includes(foodName) && !facts.breakfast && !facts.categoryAssigned) {
+                    facts.breakfast = true;
+                    facts.categoryAssigned = true;
+                    changes = true;
+                }
+
+                // R6: Specific lunch foods
+                if (lunchFoods.includes(foodName) && !facts.lunch && !facts.categoryAssigned) {
+                    facts.lunch = true;
+                    facts.categoryAssigned = true;
+                    changes = true;
+                }
+
+                // R9: Specific dinner foods
+                if (dinnerFoods.includes(foodName) && !facts.dinner && !facts.categoryAssigned) {
+                    facts.dinner = true;
+                    facts.categoryAssigned = true;
+                    changes = true;
+                }
+
+                // R12: Specific snack foods
+                if (snackFoods.includes(foodName) && !facts.snack && !facts.categoryAssigned) {
+                    facts.snack = true;
+                    facts.categoryAssigned = true;
+                    changes = true;
+                }
+
+                // R15: Specific health foods
+                if (healthFoods.includes(foodName) && !facts.healthFood) {
+                    facts.healthFood = true;
+                    changes = true;
+                    // Note: Health Food can be assigned without setting categoryAssigned
+                }
+
+                // Only apply other rules if no specific category assigned
+                if (!facts.categoryAssigned) {
+                    // R1: Morning -> Breakfast
+                    if (facts.morning && !facts.breakfast) {
+                        facts.breakfast = true;
+                        changes = true;
+                    }
+
+                    // R2: Light -> Breakfast
+                    if (facts.light && !facts.breakfast) {
+                        facts.breakfast = true;
+                        changes = true;
+                    }
+
+                    // R4: Noon -> Lunch
+                    if (facts.noon && !facts.lunch) {
+                        facts.lunch = true;
+                        changes = true;
+                    }
+
+                    // R5: High Calorie -> Lunch
+                    if (facts.highCalorie && !facts.lunch) {
+                        facts.lunch = true;
+                        changes = true;
+                    }
+
+                    // R7: Night -> Dinner
+                    if (facts.night && !facts.dinner) {
+                        facts.dinner = true;
+                        changes = true;
+                    }
+
+                    // R8: Heavy -> Dinner
+                    if (facts.heavy && !facts.dinner) {
+                        facts.dinner = true;
+                        changes = true;
+                    }
+
+                    // R10: Quick Prep -> Snack
+                    if (facts.quickPrep && !facts.snack) {
+                        facts.snack = true;
+                        changes = true;
+                    }
+
+                    // R11: Light -> Snack
+                    if (facts.light && !facts.snack) {
+                        facts.snack = true;
+                        changes = true;
+                    }
+                }
+
+                // R13: Nutritious -> Health Food
+                if (facts.nutritious && !facts.healthFood) {
+                    facts.healthFood = true;
+                    changes = true;
+                }
+
+                // R14: Balanced -> Health Food
+                if (facts.balanced && !facts.healthFood) {
+                    facts.healthFood = true;
+                    changes = true;
+                }
+            }
+
+            // Collect categories
+            let categories = [];
+            if (facts.breakfast && facts.categoryAssigned) {
+                categories.push('Breakfast');
+            } else if (facts.lunch && facts.categoryAssigned) {
+                categories.push('Lunch');
+            } else if (facts.dinner && facts.categoryAssigned) {
+                categories.push('Dinner');
+            } else if (facts.snack && facts.categoryAssigned) {
+                categories.push('Snack');
+            } else if (facts.healthFood && healthFoods.includes(foodName)) {
+                categories.push('Health Food');
+            } else {
+                // Fallback: Choose one category based on highest priority if no specific food
+                if (facts.breakfast) categories.push('Breakfast');
+                else if (facts.lunch) categories.push('Lunch');
+                else if (facts.dinner) categories.push('Dinner');
+                else if (facts.snack) categories.push('Snack');
+            }
+
+            // Add Health Food if applicable and not already the primary category
+            if (facts.healthFood && !categories.includes('Health Food')) {
+                categories.push('Health Food');
+            }
+
+            // Display result
+            const resultDiv = document.getElementById('result');
+            if (categories.length > 0) {
+                let icon = '🍽️';
+                let categoryClass = '';
+                
+                if (categories.includes('Breakfast')) {
+                    icon = '☕🍳';
+                    categoryClass = 'category-breakfast';
+                } else if (categories.includes('Lunch')) {
+                    icon = '🍱🥗';
+                    categoryClass = 'category-lunch';
+                } else if (categories.includes('Dinner')) {
+                    icon = '🍲🍷';
+                    categoryClass = 'category-dinner';
+                } else if (categories.includes('Snack')) {
+                    icon = '🍪🍿';
+                    categoryClass = 'category-snack';
+                } else if (categories.includes('Health Food')) {
+                    icon = '🥦🍎';
+                    categoryClass = 'category-health';
+                }
+                
+                resultDiv.className = categoryClass;
+                resultDiv.innerHTML = `<span class="food-icon">${icon}</span> Food Category: <strong>${categories.join(', ')}</strong>`;
+            } else {
+                resultDiv.className = '';
+                resultDiv.innerHTML = 'No category determined. Please provide more details.';
+            }
+        }
+    </script>
+</body>
+</html>
