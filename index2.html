@@ -332,7 +332,7 @@
         color: var(--dark-color);
       }
 
-      .result-category span span {
+      .result-category span {
         color: var(--primary-color);
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
       }
@@ -705,7 +705,7 @@
                 type="button"
                 class="btn btn-submit"
                 id="submitBtn"
-                onclick="forwardChaining()"
+                onclick="forwardchaining()"
               >
                 <i class="fas fa-utensils" style="margin-right: 6px"></i
                 >Tentukan Kategori
@@ -730,14 +730,14 @@
 
       function updateProgress() {
         const progress = ((currentQuestion - 1) / totalQuestions) * 100;
-        document.getElementById("progressBar").style.width = `${progress}%`;
+        document.getElementById("progressBar").style.width = progress + "%";
       }
 
       function showQuestion(n) {
         document.querySelectorAll(".question-container").forEach((q) => {
           q.classList.remove("active");
         });
-        document.getElementById(`q${n}`).classList.add("active");
+        document.getElementById("q" + n).classList.add("active");
         document.getElementById("prevBtn").disabled = n === 1;
         if (n === totalQuestions) {
           document.getElementById("nextBtn").style.display = "none";
@@ -750,12 +750,12 @@
       }
 
       function validateCurrentQuestion() {
-        const questionId = `q${currentQuestion}`;
+        const questionId = "q" + currentQuestion;
         const questionElement = document.getElementById(questionId);
         const selectedOption = questionElement.querySelector(
           'input[type="radio"]:checked'
         );
-        const errorElement = document.getElementById(`error${currentQuestion}`);
+        const errorElement = document.getElementById("error" + currentQuestion);
         if (!selectedOption) {
           errorElement.style.display = "block";
           return false;
@@ -790,13 +790,13 @@
               });
             if (this.checked) {
               this.closest(".option").classList.add("selected");
-              document.getElementById(`error${currentQuestion}`).style.display =
+              document.getElementById("error" + currentQuestion).style.display =
                 "none";
             }
           });
         });
 
-      function forwardChaining() {
+      function forwardchaining() {
         if (!validateCurrentQuestion()) return;
 
         const waktu = document.querySelector(
@@ -826,50 +826,8 @@
         // Forward chaining rules
         const facts = { waktu, ringan, kalori, berat, nutrisi, gizi };
 
-        // Rule 1: Snack
+        // Rule 1: Breakfast
         if (
-          facts.ringan === "ya" &&
-          facts.kalori === "tinggi" &&
-          facts.berat === "tidak" &&
-          facts.nutrisi === "rendah" &&
-          facts.gizi === "tidak"
-        ) {
-          kategori = "Snack";
-          jenisMakanan = [
-            "Keripik Kentang",
-            "Donat",
-            "Roti Isi",
-            "Yogurt Cup",
-            "Popcorn",
-          ];
-          resultIcon =
-            '<i class="fas fa-cookie-bite" style="margin-right: 8px;"></i>';
-          description =
-            "Makanan ringan yang dimakan di antara waktu makan utama. Disiapkan secara cepat dan mudah disantap.";
-        }
-        // Rule 2: Health Food
-        else if (
-          facts.ringan === "normal" &&
-          facts.kalori === "normal" &&
-          facts.berat === "normal" &&
-          facts.nutrisi === "tinggi" &&
-          facts.gizi === "ya"
-        ) {
-          kategori = "Health Food";
-          jenisMakanan = [
-            "Salad Sayur",
-            "Granola Bar",
-            "Smoothie Bowl",
-            "Oatmeal",
-            "Avocado Toast",
-          ];
-          resultIcon =
-            '<i class="fas fa-heartbeat" style="margin-right: 8px;"></i>';
-          description =
-            "Makanan yang kaya nutrisi, bergizi seimbang, dan baik untuk menjaga kesehatan tubuh. Umumnya rendah kalori, tinggi serat, dan alami.";
-        }
-        // Rule 3: Breakfast
-        else if (
           facts.waktu === "pagi" &&
           facts.ringan === "normal" &&
           facts.kalori === "normal" &&
@@ -890,7 +848,7 @@
           description =
             "Makanan yang dikonsumsi di pagi hari untuk mengisi energi setelah bangun tidur. Biasanya ringan, mudah dicerna, dan memberi energi awal untuk memulai hari.";
         }
-        // Rule 4: Lunch
+        // Rule 2: Lunch
         else if (
           facts.waktu === "siang" &&
           facts.ringan === "tidak" &&
@@ -912,7 +870,7 @@
           description =
             "Makanan utama yang dikonsumsi di tengah hari untuk menggantikan energi yang sudah digunakan sejak pagi. Umumnya memiliki kalori yang lebih tinggi dan bersifat mengenyangkan.";
         }
-        // Rule 5: Dinner
+        // Rule 3: Dinner
         else if (
           facts.waktu === "malam" &&
           facts.ringan === "tidak" &&
@@ -933,6 +891,48 @@
             '<i class="fas fa-utensils" style="margin-right: 8px;"></i>';
           description =
             "Makanan utama yang dikonsumsi pada malam hari. Biasanya cukup berat namun bisa juga lebih ringan tergantung kebiasaan, dan sering kali menjadi momen makan bersama keluarga.";
+        }
+        // Rule 4: Snack
+        else if (
+          facts.ringan === "ya" &&
+          facts.kalori === "tinggi" &&
+          facts.berat === "tidak" &&
+          facts.nutrisi === "rendah" &&
+          facts.gizi === "tidak"
+        ) {
+          kategori = "Snack";
+          jenisMakanan = [
+            "Keripik Kentang",
+            "Donat",
+            "Roti Isi",
+            "Yogurt Cup",
+            "Popcorn",
+          ];
+          resultIcon =
+            '<i class="fas fa-cookie-bite" style="margin-right: 8px;"></i>';
+          description =
+            "Makanan ringan yang dimakan di antara waktu makan utama. Disiapkan secara cepat dan mudah disantap.";
+        }
+        // Rule 5: Health Food
+        else if (
+          facts.ringan === "normal" &&
+          facts.kalori === "normal" &&
+          facts.berat === "normal" &&
+          facts.nutrisi === "tinggi" &&
+          facts.gizi === "ya"
+        ) {
+          kategori = "Health Food";
+          jenisMakanan = [
+            "Salad Sayur",
+            "Granola Bar",
+            "Smoothie Bowl",
+            "Oatmeal",
+            "Avocado Toast",
+          ];
+          resultIcon =
+            '<i class="fas fa-heartbeat" style="margin-right: 8px;"></i>';
+          description =
+            "Makanan yang kaya nutrisi, bergizi seimbang, dan baik untuk menjaga kesehatan tubuh. Umumnya rendah kalori, tinggi serat, dan alami.";
         }
         // No matching rule
         else {
@@ -960,7 +960,7 @@
           ${resultIcon}Kategori Makanan: <span>${kategori}</span>
         </div>
         <div class="result-description">${description}</div>
-        <div style="margin: 12px 0;">jenis makanan:</div>
+        <div style="margin: 12px 0;">Jenis makanan:</div>
         <ul class="food-list">`;
 
         jenisMakanan.forEach((item) => {
